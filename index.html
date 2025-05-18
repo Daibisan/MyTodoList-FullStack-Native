@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Todo List</title>
+
+    <link rel="stylesheet" href="/style/reset.css">
+    <link rel="stylesheet" href="/style/index.css">
+</head>
+
+<body>
+    <div class="container">
+
+        <h1>My Todo List</h1>
+        <form id="todo-form">
+            <input type="text" id="todo-input" placeholder="Add a new task..." required name="task">
+
+            <input type="date" id="date-input" name="due-date" required>
+
+            <button type="submit" id="submit-btn">Add</button>
+        </form>
+
+        <ul id="todo-list">
+            <li class="task-container">
+                <div class="text-container">
+                    <h2>Task 1</h2>
+                    <label>due: 12-12-2025</label>
+                </div>
+
+                <div class="btn-container">
+                    <button class="edit-btn">✏️</button>
+                    <input class="check-btn" type="checkbox">
+                </div>
+            </li>
+            <li class="task-container">
+                <div class="text-container">
+                    <h2>Task 1</h2>
+                    <label>due: 12-12-2025</label>
+                </div>
+
+                <div class="btn-container">
+                    <button class="edit-btn">✏️</button>
+                    <input class="check-btn" type="checkbox">
+                </div>
+            </li>
+        </ul>
+
+    </div>
+
+    <script src="/script/index.js"></script>
+</body>
+
+</html>

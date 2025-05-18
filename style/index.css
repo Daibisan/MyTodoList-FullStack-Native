@@ -1,0 +1,96 @@
+html {
+    height: 100vh;
+}
+
+body {
+    font-size: 1.5rem;
+    min-height: 100%;
+    font-family: Helvetica, sans-serif;
+    display: flex;
+    justify-content: center;
+}
+
+
+.container {
+    min-width: 700px;
+    margin-top: 5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+}
+.container h1 {
+    user-select: none;
+}
+
+
+#todo-form {
+    position: relative;
+    display: flex;
+    width: 100%;
+    gap: 1rem;
+}
+
+#todo-form * {
+    border-radius: 1.7rem;
+}
+
+#todo-input {
+    padding-inline: 1rem;
+}
+
+#date-input {
+    border: none;
+    position: absolute;
+    top: 50%;
+    right: 18%;
+    transform: translateY(-50%);
+    outline: none;
+}
+#date-input::-webkit-datetime-edit,
+#date-input::-webkit-inner-spin-button,
+#date-input::-webkit-clear-button {
+    display: none;
+}
+#date-input::-webkit-calendar-picker-indicator {
+    cursor: pointer;
+}
+
+#submit-btn {
+    cursor: pointer;
+}
+
+
+#todo-list {
+    border: 1px solid black;
+    border-radius: 8px;
+    width: 100%;
+    height: 60vh;
+    padding: 2rem;
+    overflow: auto;
+}
+
+.task-container {
+    border: 1px solid black;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    border-radius: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    user-select: none;
+}
+
+.text-container label {
+    font-size: 1rem;
+}
+
+.btn-container .edit-btn {
+    border: none;
+    padding: 0px;
+    cursor: pointer;
+}
+
+.btn-container .check-btn {
+    scale: 1.8;
+}
