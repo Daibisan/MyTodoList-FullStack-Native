@@ -16,7 +16,6 @@
         <h1>My Todo List</h1>
         <form id="todo-form">
             <input type="text" id="todo-input" placeholder="Add a new task..." required name="task">
-
             <input type="date" id="date-input" name="due-date" required>
 
             <button type="submit" id="submit-btn">Add</button>
@@ -53,3 +52,15 @@
 </body>
 
 </html>
+<!-- 
+Add Task Flow :
+    input task + due date -> convert data to json .js -> postTodo.php -> MySql saved -> 
+    fetch getTodo.php -> save data to array .js -> render todo() .js
+
+Update Task Flow : 
+    mirip Add Task Flow tapi updateTodo.php
+
+Delete/clear checked task :
+    mirip Add Task Flow tapi deleteTodo.php
+
+-->
