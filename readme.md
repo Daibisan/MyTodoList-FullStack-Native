@@ -5,10 +5,11 @@ A modern, responsive Todo List web application built with **HTML**, **CSS**, **J
 ---
 
 ## 📸 Screenshots
-[./img/default_light_ss.png](./img/default_light_ss.png)
-[./img/default_dark_ss.png](./img/default_dark_ss.png)
-[./img/todoAdded_light_ss.png](./img/todoAdded_light_ss.png)
-[./img/todoAdded_dark_ss.png](./img/todoAdded_dark_ss.png)
+
+![Light Mode](./img/default_light_ss.png)
+![Dark Mode](./img/default_dark_ss.png)
+![Todo Added Light](./img/todoAdded_light_ss.png)
+![Todo Added Dark](./img/todoAdded_dark_ss.png)
 
 
 
@@ -59,7 +60,7 @@ myTodoList_PHP_MySql/
 
 1. **Clone the repository:**
    ```sh
-   git clone https://github.com/yourusername/myTodoList_PHP_MySql.git
+   git clone https://github.com/Daibisan/myTodoList_PHP_MySql.git
    ```
 
 2. **Setup the Database:**
