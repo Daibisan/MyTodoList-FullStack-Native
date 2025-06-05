@@ -1,3 +1,8 @@
+<!-- 
+path: 
+http://localhost/myTodoList_PHP_MySql/Public/index.html
+-->
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,61 +11,63 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Todo List</title>
 
-    <link rel="stylesheet" href="/style/reset.css">
-    <link rel="stylesheet" href="/style/index.css">
+    <link rel="stylesheet" href="./style/reset.css">
+    <link rel="stylesheet" href="./style/style.css">
 </head>
 
 <body>
-    <div class="container">
 
-        <h1>My Todo List</h1>
-        <form id="todo-form">
-            <input type="text" id="todo-input" placeholder="Add a new task..." required name="task">
-            <input type="date" id="date-input" name="due-date" required>
-
-            <button type="submit" id="submit-btn">Add</button>
-        </form>
-
-        <ul id="todo-list">
-            <li class="task-container">
-                <div class="text-container">
-                    <h2>Task 1</h2>
-                    <label>due: 12-12-2025</label>
+    <!-- Main Container -->
+    <div id="main-container">
+        <div id="upper-container">
+            <h1>My Todo List</h1>
+    
+            <!-- Add Task Form -->
+            <form id="add-form" class="input-form">
+                <div class="input-container">
+                    <input type="text" class="todo-input" placeholder="Add a new task..." required name="task" />
+                    <input type="date" class="date-input" name="due-date" required />
                 </div>
+                <button type="submit" class="general-btn">Add</button>
+            </form>
+        </div>
 
-                <div class="btn-container">
-                    <button class="edit-btn">✏️</button>
-                    <input class="check-btn" type="checkbox">
-                </div>
-            </li>
-            <li class="task-container">
-                <div class="text-container">
-                    <h2>Task 1</h2>
-                    <label>due: 12-12-2025</label>
-                </div>
-
-                <div class="btn-container">
-                    <button class="edit-btn">✏️</button>
-                    <input class="check-btn" type="checkbox">
-                </div>
-            </li>
-        </ul>
-
+        <div id="content-container" class="hide">
+            <!-- Todo List -->
+            <ul id="todo-list-container">
+                
+            </ul>
+    
+            <!-- Clear Checked Todo -->
+             <div id="clear-btn-container" class="hide">
+                 <button id="clear-btn" class="general-btn">Clear</button>
+             </div>
+        </div>
     </div>
 
-    <script src="/script/index.js"></script>
+    <!-- Edit Task Popup -->
+    <div id="edit-popup-container" class="hide">
+        <form id="edit-form" class="edit-form">
+            <div class="input-container">
+                <input type="text" class="todo-input" placeholder="Edit task..." required name="task" />
+                <input type="date" class="date-input" name="due-date" required />
+            </div>
+            <div class="popup-button-container">
+                <button type="button" id="cancel-btn" class="general-btn">Cancel</button>
+                <button type="submit" id="edit-submit-btn" class="general-btn">Edit</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Feedback Message Popup -->
+     <div id="feedback-message-popup" class="feedback-message hide">
+        <p></p>
+     </div>
+
+    <!-- Dark Mode -->
+     <button id="dark-mode-btn" class="general-btn">Dark Mode</button>
+
+    <script type="module" src="./main.js"></script>
 </body>
 
 </html>
-<!-- 
-Add Task Flow :
-    input task + due date -> convert data to json .js -> postTodo.php -> MySql saved -> 
-    fetch getTodo.php -> save data to array .js -> render todo() .js
-
-Update Task Flow : 
-    mirip Add Task Flow tapi updateTodo.php
-
-Delete/clear checked task :
-    mirip Add Task Flow tapi deleteTodo.php
-
--->

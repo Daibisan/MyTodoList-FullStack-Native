@@ -1,0 +1,534 @@
+:root {
+    --bg-main: #f8f8f8;
+    --bg-popup: white;
+    --bg-feedback: #D1FAE5;
+    --text-feedback: #065F46;
+    --text-main: #222222;
+    --text-heading: #111111;
+    --text-subtle: #555555;
+    --box-shadow-light: rgba(0, 0, 0, 0.1);
+    --box-shadow-heavy: rgba(0, 0, 0, 0.2);
+    --border-light: #ccc;
+    --border-light-alpha: #cccccc7b;
+}
+
+.dark-theme {
+    --bg-main: #121212;
+    --bg-popup: #1e1e1e;
+    --bg-feedback: #263238;
+    --text-feedback: #80cbc4;
+    --text-main: #e0e0e0;
+    --text-heading: #ffffff;
+    --text-subtle: #aaaaaa;
+    --box-shadow-light: rgba(255, 255, 255, 0.4);
+    --box-shadow-heavy: rgba(255, 255, 255, 0.7);
+    ;
+    --border-light: #444;
+    --border-light-alpha: #4444447b;
+}
+
+.warm-theme {
+    --bg-main: #fdf6ec;
+    --bg-popup: #fff8f0;
+    --bg-feedback: #fff3cd;
+    --text-feedback: #856404;
+    --text-main: #5a4634;
+    --text-heading: #3e2c1e;
+    --text-subtle: #7a6655;
+    --box-shadow-light: rgba(0, 0, 0, 0.08);
+    --box-shadow-heavy: rgba(0, 0, 0, 0.15);
+    --border-light: #e2c8a2;
+    --border-light-alpha: #e2c8a27b;
+}
+
+html {
+    height: 100vh;
+}
+
+body {
+    font-family: Helvetica, sans-serif;
+    font-size: 1.5rem;
+    min-height: 100%;
+    display: flex;
+    justify-content: center;
+    background-color: var(--bg-main);
+    padding-inline: 1rem;
+    color: var(--text-main);
+}
+
+h1,
+h2,
+h3 {
+    color: var(--text-heading);
+}
+
+/* =============================
+   LAYOUT UTAMA
+============================= */
+
+#dark-mode-btn {
+    width: 150px;
+    position: absolute;
+    right: 2rem;
+    top: 1rem;
+    cursor: pointer;
+}
+
+#main-container {
+    width: 100%;
+    max-width: 700px;
+    margin-top: 15rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    transition: margin-top 0.5s ease;
+}
+
+#main-container.listActive {
+    margin-top: 5rem;
+}
+
+#main-container.todoChecked {
+    margin-top: 3rem;
+}
+
+/* =============================
+   FORM TAMBAH & EDIT TASK
+============================= */
+
+#upper-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+}
+
+#upper-container h1 {
+    user-select: none;
+}
+
+.input-form,
+.edit-form {
+    display: flex;
+    gap: 1rem;
+    width: 100%;
+    align-items: stretch;
+    user-select: none;
+}
+
+.input-container {
+    position: relative;
+    height: 3.5rem;
+    width: 100%;
+}
+
+.todo-input {
+    height: 100%;
+    width: 100%;
+    padding: 0 1rem;
+    padding-right: 3.5rem;
+    border-radius: 1.7rem;
+    border: none;
+    box-shadow: 0 4px 12px var(--box-shadow-light);
+    font-size: 1rem;
+    outline: none;
+    transition: box-shadow 0.2s;
+    background-color: var(--bg-main);
+}
+
+.todo-input:focus {
+    box-shadow: 0 4px 12px var(--box-shadow-heavy);
+}
+
+.date-input {
+    position: absolute;
+    top: 50%;
+    right: 1rem;
+    transform: translateY(-50%);
+    /* height: 70%; */
+    /* width: 2rem; */
+    border: none;
+    /* background: transparent; */
+    background-color: #f8f8f8;
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: 0 0 12px var(--box-shadow-light);
+}
+
+.date-input:hover {
+    box-shadow: 0 0 12px var(--box-shadow-heavy);
+}
+
+.date-input::-webkit-datetime-edit,
+.date-input::-webkit-inner-spin-button,
+.date-input::-webkit-clear-button {
+    display: none;
+    pointer-events: none;
+    user-select: none;
+}
+
+.date-input::-webkit-calendar-picker-indicator {
+    cursor: pointer;
+}
+
+/* TOMBOL */
+.general-btn {
+    height: 3.5rem;
+    padding: 0 1.5rem;
+    border-radius: 1.7rem;
+    font-size: 1rem;
+    cursor: pointer;
+    border: none;
+    background-color: var(--bg-main);
+    box-shadow: 0 4px 12px var(--box-shadow-light);
+    transition: box-shadow 0.2s;
+}
+
+.general-btn:hover {
+    box-shadow: 0 4px 12px var(--box-shadow-heavy);
+}
+
+/* =============================
+   DAFTAR TODO
+============================= */
+
+#content-container {
+    width: 100%;
+    padding: 1rem 2rem;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    box-shadow: 0 4px 12px var(--box-shadow-light);
+}
+
+#content-container.hide, 
+#clear-btn-container.hide {
+    display: none;
+}
+
+#clear-btn-container {
+    display: flex;
+    justify-content: flex-end;
+    border-top: 1px solid var(--border-light-alpha);
+    padding-top: 1rem;
+}
+
+#todo-list-container {
+    padding: 8px;
+    height: 50vh;
+    overflow-y: auto;
+    scrollbar-gutter: stable;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    user-select: none;
+}
+
+#todo-list-container::-webkit-scrollbar {
+    display: none;
+}
+
+.task-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 3rem;
+    padding: 1rem;
+    box-shadow: 0 0 8px var(--box-shadow-light);
+    border-radius: 8px;
+    background-color: var(--bg-popup);
+}
+
+.text-container {
+    color: var(--text);
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    min-width: 0;
+    overflow-wrap: break-word;
+    gap: 0.5rem;
+}
+
+.text-container h2 {
+    font-size: 1.2rem;
+}
+
+.text-container p {
+    font-size: 0.85rem;
+}
+
+.btn-container {
+    display: flex;
+    gap: 0.5rem;
+    user-select: none;
+}
+
+.edit-btn {
+    border: none;
+    padding: 0;
+    cursor: pointer;
+}
+
+.check-btn {
+    transform: scale(1.8);
+}
+
+/* =============================
+   POPUP EDIT
+============================= */
+
+#edit-popup-container {
+    z-index: 999;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.25);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    display: none;
+}
+
+#edit-popup-container.show {
+    opacity: 1;
+}
+
+#edit-popup-container.hide {
+    opacity: 0;
+}
+
+.edit-form {
+    width: 100%;
+    max-width: 600px;
+    padding: 2rem;
+    margin-inline: 1rem;
+    background-color: var(--bg-popup);
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.edit-form .input-container {
+    height: 3.5rem;
+}
+
+.edit-form .todo-input {
+    height: 100%;
+    padding: 0 1rem;
+    padding-right: 3.5rem;
+    border-radius: 1.7rem;
+    font-size: 1rem;
+}
+
+.edit-form .date-input {
+    position: absolute;
+    top: 50%;
+    right: 1rem;
+    transform: translateY(-50%);
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    outline: none;
+}
+
+.edit-form .popup-button-container {
+    display: flex;
+    gap: 2rem;
+}
+
+.edit-form .popup-button-container button:nth-child(1) {
+    flex-grow: 1;
+}
+
+.edit-form .popup-button-container button:nth-child(2) {
+    flex-grow: 1.15;
+}
+
+/* =============================
+   POPUP FEEDBACK MESSAGE
+============================= */
+
+#feedback-message-popup {
+    font-size: 1.1rem;
+    padding: 1rem;
+    position: fixed;
+    bottom: 2rem;
+    right: 3rem;
+    border-radius: 8px;
+    background-color: var(--bg-feedback);
+    color: var(--text-feedback);
+    box-shadow: 0 4px 12px var(--box-shadow-light);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.feedback-message.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.feedback-message.hide {
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+/* =============================
+   Animation
+============================= */
+@keyframes scaleUp {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.01);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+.scale-animation {
+    animation: scaleUp 0.5s ease;
+}
+
+
+/* =============================
+   Media Queries
+============================= */
+
+@media only screen and (max-width: 739px) {
+
+    #main-container,
+    #edit-form {
+        scale: 0.9;
+    }
+
+    #dark-mode-btn {
+        right: 0.8rem;
+        scale: 0.85;
+    }
+}
+
+@media only screen and (max-width: 488px) {
+    body {
+        font-size: 1.4rem;
+    }
+
+    #dark-mode-btn {
+        right: 0.8rem;
+        top: 0.8rem;
+        scale: 0.8;
+    }
+
+    #main-container {
+        gap: 1.5rem;
+    }
+
+    .todo-input,
+    .submit-btn {
+        font-size: 1rem;
+    }
+
+    #content-container {
+        padding: 0.9rem 1.9rem;
+    }
+
+    #clear-btn-container {
+        padding-top: 0.8rem;
+    }
+
+    .task-container {
+        gap: 1.2rem;
+    }
+
+    .text-container h2 {
+        font-size: 1.1rem;
+    }
+
+    .text-container label {
+        font-size: 0.75rem;
+    }
+
+    .edit-btn {
+        font-size: 1.2rem;
+    }
+
+    .check-btn {
+        transform: scale(1.6);
+    }
+
+    #main-container,
+    #edit-form {
+        scale: 0.9;
+    }
+}
+
+@media only screen and (max-width: 400px) {
+    body {
+        font-size: 1.2rem;
+    }
+
+    #dark-mode-btn {
+        right: 0;
+        top: 3.5rem;
+        scale: 0.7;
+    }
+
+    .todo-input,
+    .submit-btn {
+        font-size: 0.8rem;
+    }
+
+    .input-container {
+        height: 3rem;
+    }
+
+    .submit-btn {
+        height: 3rem;
+        padding: 0 1.5rem;
+    }
+
+    #content-container {
+        padding: 0.7rem 1.7rem;
+    }
+
+    #clear-btn-container {
+        padding-top: 0.6rem;
+    }
+
+    .task-container {
+        gap: 1rem;
+    }
+
+    .text-container h2 {
+        font-size: 0.9rem;
+    }
+
+    .text-container label {
+        font-size: 0.55rem;
+    }
+
+    .edit-btn {
+        font-size: 1rem;
+    }
+
+    .check-btn {
+        transform: scale(1.4);
+    }
+
+    #main-container,
+    #edit-form {
+        scale: 0.8;
+    }
+}
