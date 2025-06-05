@@ -5,10 +5,10 @@ A modern, responsive Todo List web application built with **HTML**, **CSS**, **J
 ---
 
 ## 📸 Screenshots
-[./img/default_light_ss.png](./img/default_light_ss.png)
-[./img/default_dark_ss.png](./img/default_dark_ss.png)
-[./img/todoAdded_light_ss.png](./img/todoAdded_light_ss.png)
-[./img/todoAdded_dark_ss.png](./img/todoAdded_dark_ss.png)
+![Light Mode](./img/default_light_ss.png)
+![Dark Mode](./img/default_dark_ss.png)
+![Todo Added Light](./img/todoAdded_light_ss.png)
+![Todo Added Dark](./img/todoAdded_dark_ss.png)
 
 
 
