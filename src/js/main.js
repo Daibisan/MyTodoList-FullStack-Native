@@ -1,4 +1,4 @@
-import domEventInit from './modules/event.js';
+import domEventInit from './event.js';
 
 // DOM Loaded Event
 document.addEventListener('DOMContentLoaded', domEventInit);
