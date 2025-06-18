@@ -1,19 +1,23 @@
 <?php
 include('../db/database.php');
+include('../utils/jsonResponse.php');
 
+// Check request method
 if ($_SERVER["REQUEST_METHOD"] == 'PUT') {
     
     // Get body request
     $json = file_get_contents('php://input');
-    $todo_data = json_decode($json, true);
+    $body_request = json_decode($json, true);
 
     // Checking body request
-    if ($todo_data && isset($todo_data['todo_id'], $todo_data['todo'], $todo_data['due_date'])) {
+    if ($body_request && isset($body_request['todo_id'], $body_request['todo'], $body_request['due_date'])) {
 
-        $todo_id = $todo_data['todo_id'];
-        $todo = filter_var($todo_data['todo'], FILTER_SANITIZE_SPECIAL_CHARS);
-        $due_date = $todo_data['due_date'];
+        // Get data values
+        $todo_id = $body_request['todo_id'];
+        $todo = filter_var($body_request['todo'], FILTER_SANITIZE_SPECIAL_CHARS);
+        $due_date = $body_request['due_date'];
 
+        // Update DB data
         updateTodo($todo_id, $todo, $due_date, $conn);
 
     } else {
@@ -32,16 +36,16 @@ function updateTodo($todo_id, $todo, $due_date, $conn) {
         $sql = "UPDATE todos 
                 SET todo = \"{$todo}\",
                 due_date = DATE(\"{$due_date}\")
-                WHERE id = {$todo_id};";
+                WHERE todo_id = {$todo_id};";
         $conn->query($sql);
 
         $conn->close();
 
         jsonResponse(200, 'ok', 'Todo updated successfully!');
         
-    } catch (mysqli_sql_exception) {
+    } catch (mysqli_sql_exception $e) {
         $conn->close();
-        jsonResponse(500, 'server error', 'Failed : Update data failed');
+        jsonResponse(500, 'server error', 'Update todo failed: ' . $e->getMessage());
     }
 }
 ?>

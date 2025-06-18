@@ -1,17 +1,22 @@
 <?php
 include('../db/database.php');
+include('../utils/jsonResponse.php');
 
+// Check request method
 if ($_SERVER["REQUEST_METHOD"] == 'POST') {
     
     // Get body request
     $json = file_get_contents('php://input');
-    $todo_data = json_decode($json, true);
+    $body_request = json_decode($json, true);
 
     // Checking body request
-    if ($todo_data && isset($todo_data['todo'], $todo_data['due_date'])) {
-        $todo = filter_var($todo_data['todo'], FILTER_SANITIZE_SPECIAL_CHARS);
-        $due_date = $todo_data['due_date'];
+    if ($body_request && isset($body_request['todo'], $body_request['due_date'])) {
 
+        // Get data values
+        $todo = filter_var($body_request['todo'], FILTER_SANITIZE_SPECIAL_CHARS);
+        $due_date = $body_request['due_date'];
+
+        // Insert data to DB
         insertTodo($todo, $due_date, $conn);
 
     } else {
@@ -34,9 +39,9 @@ function insertTodo($todo, $due_date, $conn) {
 
         jsonResponse(201, 'created', 'Todo saved successfully!');
         
-    } catch (mysqli_sql_exception) {
+    } catch (mysqli_sql_exception $e) {
         $conn->close();
-        jsonResponse(500, 'server error', 'Failed : Insert data failed');
+        jsonResponse(500, 'server error', 'Insert todo failed: ' . $e->getMessage());
     }
 }
 ?>

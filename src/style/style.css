@@ -59,6 +59,7 @@ body {
 h1,
 h2,
 h3 {
+    font-size: 3rem;
     color: var(--text-heading);
 }
 
@@ -369,6 +370,7 @@ h3 {
     color: var(--text-feedback);
     box-shadow: 0 4px 12px var(--box-shadow-light);
     transition: opacity 0.3s ease, transform 0.3s ease;
+    pointer-events: none;
 }
 
 .feedback-message.show {

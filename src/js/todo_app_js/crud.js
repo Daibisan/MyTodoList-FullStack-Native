@@ -4,7 +4,7 @@ import { setTodos } from "./data.js";
 async function postTodo(data) {
 
     try {
-        const response = await fetch('/myTodoList_PHP_MySql/route/postTodo.php', {
+        const response = await fetch('/myTodoList_PHP_MySql/server/route/postTodo.php', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -25,7 +25,7 @@ async function postTodo(data) {
 
 async function readTodos(updatedTodoId = null) {
     try {
-        const response = await fetch('/myTodoList_PHP_MySql/route/getTodo.php', {
+        const response = await fetch('/myTodoList_PHP_MySql/server/route/getTodo.php', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
@@ -51,7 +51,7 @@ async function updateTodo(todo_id, todo, due_date) {
 
     const todoStringify = JSON.stringify({ todo_id, todo, due_date });
     try {
-        const response = await fetch('/myTodoList_PHP_MySql/route/updateTodo.php', {
+        const response = await fetch('/myTodoList_PHP_MySql/server/route/updateTodo.php', {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -73,7 +73,7 @@ async function updateTodo(todo_id, todo, due_date) {
 async function deleteTodos(checkedTodoIds) {
 
     try {
-        const response = await fetch('/myTodoList_PHP_MySql/route/deleteTodos.php', {
+        const response = await fetch('/myTodoList_PHP_MySql/server/route/deleteTodos.php', {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json'

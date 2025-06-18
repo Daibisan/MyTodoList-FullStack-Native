@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+        integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="../src/style/reset.css">
+    <link rel="stylesheet" href="../src/style/user_regis_css/regis.css">
+</head>
+
+<body>
+
+    <!-- Signup Form -->
+    <div id="signUp-container" class="main-container">
+
+        <header>
+            <h1>Sign up</h1>
+        </header>
+
+        <form class="form-container">
+            <ul>
+                <li>
+                    <input type="text" name="username" placeholder="Name" maxlength="15">
+                    <p class="inline-err-msg hide">Email can't empty!</p>
+                </li>
+                <li>
+                    <input type="email" name="email" placeholder="Email">
+                    <p class="inline-err-msg hide">Email can't empty!</p>
+                </li>
+                <li>
+                    <div class="password-input-container">
+                        <input type="password" name="pw" placeholder="Password" maxlength="20">
+                        <span class="toggle-password-btn">
+                            <i class="fa-regular fa-eye-slash"></i>
+                        </span>
+                    </div>
+                    <p class="inline-err-msg hide">Email can't empty!</p>
+                </li>
+            </ul>
+        </form>
+
+        <div class="bottom-container">
+            <button id="signup-btn" class="submit-btn">Sign up</button>
+            <p class="switch-page-text">Already have an account? <a>Login</a></p>
+        </div>
+
+    </div>
+
+    <!-- Login Form -->
+    <div id="login-container" class="main-container hide">
+
+        <header>
+            <h1>Login</h1>
+        </header>
+
+        <form class="form-container">
+            <ul>
+                <li>
+                    <input type="email" name="email" placeholder="Email">
+                    <p class="inline-err-msg hide">Email can't be empty!</p>
+                </li>
+                <li>
+                    <div class="password-input-container">
+                        <input type="password" name="pw" placeholder="Password" maxlength="20">
+                        <span class="toggle-password-btn">
+                            <i class="fa-regular fa-eye-slash"></i>
+                        </span>
+                    </div>
+                    <p class="inline-err-msg hide">Password can't be empty!</p>
+                </li>
+            </ul>
+        </form>
+
+        <div class="bottom-container">
+            <button id="login-btn" class="submit-btn">Login</button>
+            <p class="switch-page-text">Don't have an account? <a>Sign up</a></p>
+        </div>
+
+    </div>
+
+    <!-- Feedback Message Popup -->
+     <div id="feedback-message-popup" class="feedback-message hide">
+        <p></p>
+     </div>
+
+    <script type="module" src="../src/js/user_regis_js/main.js"></script>
+</body>
+
+</html>

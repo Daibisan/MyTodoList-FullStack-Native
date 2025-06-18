@@ -1,5 +1,4 @@
 <?php
-
 function jsonResponse($statusCode, $status, $message, $body = null) {
     http_response_code($statusCode);
     header('Content-Type: application/json');
@@ -11,5 +10,4 @@ function jsonResponse($statusCode, $status, $message, $body = null) {
     ]);
     exit();
 }
-
 ?>

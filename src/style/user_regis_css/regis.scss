@@ -1,0 +1,194 @@
+:root {
+    --bg-main: #f8f8f8;
+    --bg-popup: white;
+    --bg-feedback: #D1FAE5;
+    --text-feedback: #065F46;
+    --text-main: #222222;
+    --text-heading: #111111;
+    --text-subtle: #555555;
+    --text-link: #007bff;
+    --box-shadow-light: rgba(0, 0, 0, 0.1);
+    --box-shadow-heavy: rgba(0, 0, 0, 0.2);
+    --border-light: #ccc;
+    --border-light-alpha: #cccccc7b;
+}
+
+html {
+    height: 100%;
+
+    body {
+        font-family: Helvetica, sans-serif;
+        min-height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding-bottom: 4rem;
+        background-color: var(--bg-main);
+        padding-inline: 1rem;
+        color: var(--text-main);
+    }
+
+}
+
+h1 {
+    font-size: 2.5rem;
+    color: var(--text-heading);
+    user-select: none;
+}
+
+/* =============================
+   LAYOUT UTAMA
+============================= */
+
+.main-container {
+    width: 100%;
+    max-width: 500px;
+    height: max-content;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    box-shadow: 0 4px 12px var(--box-shadow-light);
+
+    header {
+        text-align: center;
+    }
+
+    .form-container {
+
+        ul {
+            font-size: 0.9rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            user-select: none;
+
+            .inline-err-msg {
+                margin-top: 0.6rem;
+                margin-left: 0.1rem;
+                color: #e63946;
+                z-index: 9;
+            }
+
+            input {
+                width: 100%;
+                padding: 0.9rem 1rem;
+                border-radius: 5px;
+                border: none;
+                box-shadow: 0 4px 12px var(--box-shadow-light);
+                outline: none;
+                transition: box-shadow 0.2s;
+            }
+
+            input:focus {
+                box-shadow: 0 4px 12px var(--box-shadow-heavy);
+            }
+
+            input.error {
+                border: 2px solid #e63946;
+            }
+
+            input.error:focus {
+                box-shadow: none;
+            }
+
+            .toggle-password-btn {
+                position: absolute;
+                color: var(--text-subtle);
+                top: 50%;
+                transform: translateY(-50%);
+                right: 1rem;
+                cursor: pointer;
+            }
+
+            .password-input-container {
+                position: relative;
+            }
+
+        }
+
+    }
+
+    .bottom-container {
+
+        .submit-btn {
+            width: 100%;
+            padding: 1rem;
+            background-color: #10b981;
+            color: white;
+            border-radius: 10px;
+            outline: none;
+            border: none;
+            box-shadow: 0 4px 12px var(--box-shadow-light);
+            transition: background-color 0.2s;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .submit-btn:hover {
+            background-color: #0f9c6d;
+        }
+
+        .switch-page-text {
+            font-size: 0.9rem;
+            text-align: center;
+            margin-top: 1rem;
+
+            a {
+                color: var(--text-link);
+                text-decoration: none;
+                cursor: pointer;
+                user-select: none;
+            }
+
+            a:hover {
+                text-decoration: underline;
+            }
+        }
+
+    }
+
+}
+
+.main-container>* {
+    width: 100%;
+}
+
+
+/* =============================
+   GENERAL CLASS
+============================= */
+
+.hide {
+    display: none;
+}
+
+/* =============================
+   POPUP FEEDBACK MESSAGE
+============================= */
+
+#feedback-message-popup {
+    font-size: 1.1rem;
+    padding: 1rem;
+    position: fixed;
+    bottom: 2rem;
+    right: 3rem;
+    border-radius: 8px;
+    background-color: var(--bg-feedback);
+    color: var(--text-feedback);
+    box-shadow: 0 4px 12px var(--box-shadow-light);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    pointer-events: none;
+}
+
+.feedback-message.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.feedback-message.hide {
+    display: block;
+    opacity: 0;
+    transform: translateY(20px);
+}

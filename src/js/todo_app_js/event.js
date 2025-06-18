@@ -34,7 +34,6 @@ export default function domEventInit() {
         edit_form.querySelector('.todo-input').value = '';
         edit_form.querySelector('.date-input').value = '';
 
-        // console.log(todo_id, todo_input, date_input);
         crud.updateTodo(todo_id, todo_input, date_input);
         hideEditPopup();
 
