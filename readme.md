@@ -5,6 +5,8 @@ A modern, responsive Todo List web application built with **HTML**, **CSS**, **J
 ---
 
 ## 📸 Screenshots
+![Signup Page](./src/img/signup_light.png.png)
+![Login Page](./src/img/login.png)
 ![Light Mode](./src/img/default_light_ss.png)
 ![Dark Mode](./src/img/default_dark_ss.png)
 ![Todo Added Light](./src/img/todoAdded_light_ss.png)
@@ -14,7 +16,7 @@ A modern, responsive Todo List web application built with **HTML**, **CSS**, **J
 
 ## 🚀 Features
 
-- **User Authentication** (planned)
+- **Sign Up & Login (User Authentication) with Form Validation**
 - **Add, Edit, Delete, and Mark Todos as Done**
 - **Due Date Management**
 - **Responsive UI with Animations and Transitions**
@@ -30,25 +32,46 @@ A modern, responsive Todo List web application built with **HTML**, **CSS**, **J
 ```
 myTodoList_PHP_MySql/
 │
-├── Public/           # Frontend assets (HTML, CSS, JS modules)
+├── Public/                     # Frontend assets (HTML, CSS, JS modules)
 │   ├── index.html
-│   ├── main.js
-│   ├── modules/
+│   └── regis.html
+│
+├── server/
+│   ├── db/
+│   │   └── database.php        # Database connection script
+│   ├── route/
+│   │   ├── deleteTodos.php
+│   │   ├── getAccName.php
+│   │   ├── getTodo.php
+│   │   ├── postTodo.php
+│   │   ├── updateTodo.php
+│   │   └── user_regis_routes/  # User authentication endpoints
+│   │       ├── checkEmailExistence.php
+│   │       ├── login.php
+│   │       ├── logout.php
+│   │       └── sign_up.php
+│   └── utils/
+│       └── jsonResponse.php
+│
+├── src/
+│   ├── DB Schema/
+│   │   └── createTables.sql
+│   ├── img/
+│   │   ├── default_dark_ss.png
+│   │   ├── default_light_ss.png
+│   │   ├── login.png
+│   │   ├── signup_light.png
+│   │   ├── todoAdded_dark_ss.png
+│   │   └── todoAdded_light_ss.png
+│   ├── js/
+│   │   ├── todo_app_js/
+│   │   └── user_regis_js/
 │   └── style/
-│
-├── db/               # Database connection scripts
-│   └── database.php
-│
-├── route/            # PHP API endpoints (CRUD)
-│   ├── getTodo.php
-│   ├── postTodo.php
-│   ├── updateTodo.php
-│   └── deleteTodos.php
-│
-├── utils/            # Utility scripts (e.g., JSON response)
-│   └── jsonResponse.php
-│
-├── requirements/     # UI/UX requirements and mockups
+│       ├── reset.css
+│       ├── style.css
+│       └── user_regis_css/
+│           ├── regis.css
+│           └── regis.scss
 │
 └── readme.md
 ```
@@ -64,11 +87,11 @@ myTodoList_PHP_MySql/
 
 2. **Setup the Database:**
    - Create a MySQL database named `mytodolistdb`.
-   - Import your table schema (e.g., `todos` table) as needed.
+   - Create tables using DB Schema in this repo.
 
 3. **Configure XAMPP:**
    - Place the project folder in your `htdocs` directory.
-   - Ensure MySQL is running on port `3307` (or update `db/database.php`).
+   - Ensure MySQL is running on port `3306` (or update `db/database.php`).
 
 4. **Run the App:**
    - Open [http://localhost/myTodoList_PHP_MySql/Public/index.html](http://localhost/myTodoList_PHP_MySql/Public/index.html) in your browser.
