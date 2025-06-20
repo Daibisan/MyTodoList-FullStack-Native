@@ -61,9 +61,15 @@ export function autoCursotPlacement(whichForm) {
 
 export function showInlineError(inlineError, inputBox, errorMsg) {
 
-    inlineError.innerText = errorMsg;
-    inlineError.classList.remove('hide');
-    inputBox.classList.add('error');
+    if (inlineError !== null) {
+
+        inlineError.innerText = errorMsg;
+        inlineError.classList.remove('hide');
+
+    }
+
+    if (inputBox !== null)
+        inputBox.classList.add('error');
 
 }
 
@@ -91,50 +97,19 @@ export function showFeedbackPopup(msg) {
 
 }
 
-export function hideAllInlineError(usernameInlineError = null, emailInlineError = null, passwordInlineError = null, usernameInputBox = null, emailInputBox = null, passwordInputBox = null) {
+export function hideAllInlineError(fields) {
 
-    const elementsAreNull = usernameInlineError == null && emailInlineError == null && passwordInlineError == null && usernameInputBox == null && emailInputBox == null && passwordInputBox == null;
+    const hide = ({ inlineErrEl, inputEl }) => {
+        inlineErrEl?.classList.add("hide");
+        inputEl?.classList.remove("error");
+    };
 
-    if (!elementsAreNull) { // Hide all error from specified form
+    if (Array.isArray(fields) && fields.length) { // Hide specific input error
+        fields.forEach(hide);
 
-        // Hide inline error
-        usernameInlineError.classList.add('hide');
-        emailInlineError.classList.add('hide');
-        passwordInlineError.classList.add('hide');
-
-        // Remove input box error
-        usernameInputBox.classList.remove('error');
-        emailInputBox.classList.remove('error');
-        passwordInputBox.classList.remove('error');
-
-    } else { // Hide all error from all form
-
-        const usernameInput = document.querySelector('input[name=username]');
-        const emailInputs = document.querySelectorAll('input[name=email]');
-        const passwordInputs = document.querySelectorAll('input[name=pw]');
-
-        const inline_err_msgs = document.querySelectorAll('.inline-err-msg');
-
-        // Remove input box error
-        if (usernameInput.classList.contains('error'))
-            usernameInput.classList.remove('error');
-
-        emailInputs.forEach(input => {
-            if (input.classList.contains('error'))
-                input.classList.remove('error');
-        });
-
-        passwordInputs.forEach(input => {
-            if (input.classList.contains('error'))
-                input.classList.remove('error');
-        });
-
-        // Hide inline error
-        inline_err_msgs.forEach(msg => {
-            if (!msg.classList.contains('hide'))
-                msg.classList.add('hide')
-        });
-
+    } else { // Hide semua error
+        document.querySelectorAll(".inline-err-msg").forEach((el) => el.classList.add("hide"));
+        document.querySelectorAll("input.error").forEach((el) => el.classList.remove("error"));
     }
 
 }

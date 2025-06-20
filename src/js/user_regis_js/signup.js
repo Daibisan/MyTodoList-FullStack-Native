@@ -1,3 +1,4 @@
+import { emailFormatIsWrong, inputsAreEmpty } from "./formValidation.js";
 import { hideAllInlineError, showFeedbackPopup, showInlineError, switchForm } from "./ui.js";
 
 export async function signUp(elm) {
@@ -12,7 +13,7 @@ export async function signUp(elm) {
     const passwordValue = inputsArr[2].value.trim();
 
     // Form Validation
-    if (inputsAreEmpty(usernameValue, emailValue, passwordValue, inputsArr)) { // Exit if inputs are empty
+    if (inputsAreEmpty(inputsArr)) { // Exit if inputs are empty
         return;
 
     } else if (emailFormatIsWrong(emailValue, inputsArr)) { // Exit if email format is wrong
@@ -23,7 +24,11 @@ export async function signUp(elm) {
     }
 
     // Create Account
-    createAccount(usernameValue, emailValue, passwordValue);
+    const createAccountResult = await createAccount(usernameValue, emailValue, passwordValue);
+    if (createAccountResult.message === 'Signup Success!') {
+        switchForm();
+    }
+    showFeedbackPopup(createAccountResult.message);
 
 }
 
@@ -47,9 +52,12 @@ async function createAccount(usernameValue, emailValue, passwordValue) {
         
         const result = await response.json();
 
-        showFeedbackPopup(result.message);
-        switchForm();
-
+        // Error Message
+        if (result.status === 'server error')
+            console.error('Server error: '+result.body);
+        
+        return result;
+        
     } catch (error) {
         console.error(error);
         alert('Failed : Signup failed!');
@@ -57,79 +65,15 @@ async function createAccount(usernameValue, emailValue, passwordValue) {
     
 }
 
-// Form Validation Functions
-function inputsAreEmpty(username, email, password, inputsArr) {
-
-    // Get InlineError Elements
-    const usernameInlineError = (inputsArr[0].parentElement).querySelector('.inline-err-msg');
-    const emailInlineError = (inputsArr[1].parentElement).querySelector('.inline-err-msg');
-    const passwordInlineError = (inputsArr[2].parentElement.parentElement).querySelector('.inline-err-msg');
-
-    const usernameInputBox = (usernameInlineError.parentElement).querySelector('input');
-    const emailInputBox = (emailInlineError.parentElement).querySelector('input');
-    const passwordInputBox = (passwordInlineError.parentElement).querySelector('input');
-
-
-    const usernameIsEmpty = username === '';
-    const emailIsEmpty = email === '';
-    const passwordIsEmpty = password === '';
-
-    // Check if there is no empty value
-    if (!usernameIsEmpty && !emailIsEmpty && !passwordIsEmpty) {
-        hideAllInlineError(usernameInlineError, emailInlineError, passwordInlineError,
-            usernameInputBox, emailInputBox, passwordInputBox);
-        return false;
-    }
-
-    // Hide error on switch form
-    const bottom_container = document.querySelectorAll('.bottom-container');
-    bottom_container.forEach(elm => elm.querySelector('a').addEventListener('click', switchForm));
-
-    if (usernameIsEmpty) {
-
-        const errorMsg = `Name can't be empty!`;
-        showInlineError(usernameInlineError, usernameInputBox, errorMsg);
-
-    }
-
-    if (emailIsEmpty) {
-
-        const errorMsg = `Email can't be empty!`;
-        showInlineError(emailInlineError, emailInputBox, errorMsg);
-
-    }
-
-    if (passwordIsEmpty) {
-
-        const errorMsg = `Password can't be empty!`;
-        showInlineError(passwordInlineError, passwordInputBox, errorMsg);
-
-    }
-
-    return true;
-}
-
-function emailFormatIsWrong(email, inputsArr) {
-    if (!email.match(/^[A-Za-z0-9._%+-]+@[A-Za-z.-]+\.[A-Za-z]{2,}$/)) {
-
-        const emailInlineError = (inputsArr[1].parentElement).querySelector('.inline-err-msg');
-        const emailInputBox = (emailInlineError.parentElement).querySelector('input');
-        const errorMsg = 'Email format is wrong';
-
-        showInlineError(emailInlineError, emailInputBox, errorMsg);
-        return true;
-    }
-    return false;
-}
-
 async function emailIsDuplicate(email, inputsArr) {
 
-    const emailInlineError = (inputsArr[1].parentElement).querySelector('.inline-err-msg');
-    const emailInputBox = (emailInlineError.parentElement).querySelector('input');
+    const formContainer = inputsArr[0].closest('form');
+    const emailInputBox = formContainer.querySelector('input[name=email]');
+    const emailInlineError = emailInputBox.nextElementSibling;  
     const errorMsg = 'Email is already taken';
 
     try {
-        const response = await fetch('/myTodoList_PHP_MySql/server/route/user_regis_routes/duplicateEmail.php', {
+        const response = await fetch('/myTodoList_PHP_MySql/server/route/user_regis_routes/checkEmailExistence.php', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -139,7 +83,7 @@ async function emailIsDuplicate(email, inputsArr) {
 
         const result = await response.json();
 
-        if (result.message === 'Email is duplicate') {
+        if (result.message === 'Email is exist') {
 
             showInlineError(emailInlineError, emailInputBox, errorMsg);
             return true;

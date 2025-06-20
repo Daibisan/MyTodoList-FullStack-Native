@@ -53,7 +53,7 @@ function deleteTodos($todoIds, $conn, $todo_counter) {
 
     } catch (mysqli_sql_exception $e) {
         $conn->close();
-        jsonResponse(500, 'server error', 'Delete data failed: ' . $e->getMessage());
+        jsonResponse(500, 'server error', 'Server Delete data failed', $e->getMessage());
     }
 
 }

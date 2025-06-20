@@ -1,6 +1,7 @@
 import * as crud from "./crud.js";
 import { hideEditPopup, darkMode } from "./ui.js";
 import { createTodoJson } from "./data.js";
+import { logout } from "./logout.js";
 
 export default function domEventInit() {
 
@@ -52,10 +53,10 @@ export default function domEventInit() {
 
         if (isAnyChecked) {
             const checkedTodoIds = checkboxes
-                .filter(checkbox => checkbox.checked)
-                .map(checkbox => checkbox.closest('li').dataset.id); // atau .getAttribute('data-id')
-
-            crud.deleteTodos(checkedTodoIds)
+                .filter(checkbox => checkbox.checked) // filter checked todo elm
+                .map(checkbox => checkbox.closest('li').dataset.id); // get checked todo elm todo_id
+                
+            crud.deleteTodos(checkedTodoIds);
         }
 
     });
@@ -63,5 +64,9 @@ export default function domEventInit() {
     // Dark mode btn onclick Event
     const dark_mode_btn = document.getElementById('dark-mode-btn');
     dark_mode_btn.addEventListener('click', darkMode);
+
+    // Logout btn onclick Event
+    const logout_btn = document.getElementById('logout-btn');
+    logout_btn.addEventListener('click', logout);
     
 }

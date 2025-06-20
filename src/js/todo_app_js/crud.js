@@ -13,6 +13,10 @@ async function postTodo(data) {
         });
 
         const result = await response.json();
+
+        if (result.status === 'server error')
+            console.error('Server error: '+result.body);
+        
         showFeedbackPopup(result.message);
         readTodos();
 
@@ -32,19 +36,47 @@ async function readTodos(updatedTodoId = null) {
             }
         });
 
-        const result = await response;
-        const resultJson = await response.json();
-        // Tampilkan pesan jika ada error
-        if (result.status > 200) showFeedbackPopup(resultJson.message);
+        const result = await response.json();
+        
+        // Error Message
+        if (result.status !== 'ok') 
+            showFeedbackPopup(result.message);
+        if (result.status === 'server error')
+            console.error('Server error: '+result.body);
 
-        setTodos(resultJson.body || []);
-
+        // Show username in console
+        const userAccountName = await getAccUsername();
+        console.log('Account Name: ' + userAccountName);
+        
+        // Set todos array and render todos
+        setTodos(result.body || []);
         renderTodos(updatedTodoId);
 
     } catch (error) {
         console.error(error);
         showFeedbackPopup('Failed : Read todos failed!');
     }
+}
+
+async function getAccUsername() {
+    
+    try {
+        const response = await fetch('/myTodoList_PHP_MySql/server/route/getAccName.php', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        const result = await response.json();
+        if (result.message === 'Get Username Success')
+            return result.body;
+
+    } catch (error) {
+        console.error(error);
+        showFeedbackPopup('Failed : Get Account Name failed!');
+    }
+
 }
 
 async function updateTodo(todo_id, todo, due_date) {
@@ -60,6 +92,11 @@ async function updateTodo(todo_id, todo, due_date) {
         });
 
         const result = await response.json();
+
+        // Error Message
+        if (result.status === 'server error')
+            console.error('Server error: '+result.body);
+
         showFeedbackPopup(result.message);
         readTodos(todo_id);
 
@@ -82,11 +119,14 @@ async function deleteTodos(checkedTodoIds) {
         });
 
         const result = await response.json();
-        showFeedbackPopup(result.message);
 
+        // Error Message
+        if (result.status === 'server error')
+            console.error('Server error: '+result.body);
+
+        showFeedbackPopup(result.message);
         hideClearBtn();
         await readTodos(); // Render UI first, run transition after
-        
 
     } catch (error) {
         console.error(error);

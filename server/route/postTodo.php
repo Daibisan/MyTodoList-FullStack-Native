@@ -2,6 +2,10 @@
 include('../db/database.php');
 include('../utils/jsonResponse.php');
 
+// Get session email
+session_start();
+$acc_email = $_SESSION['acc_email'];
+
 // Check request method
 if ($_SERVER["REQUEST_METHOD"] == 'POST') {
     
@@ -17,7 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] == 'POST') {
         $due_date = $body_request['due_date'];
 
         // Insert data to DB
-        insertTodo($todo, $due_date, $conn);
+        insertTodo($todo, $due_date, $acc_email, $conn);
 
     } else {
         jsonResponse(400, 'bad request', 'Failed : Invalid JSON body');
@@ -30,9 +34,9 @@ if ($_SERVER["REQUEST_METHOD"] == 'POST') {
 // =============================
 // Function
 // =============================
-function insertTodo($todo, $due_date, $conn) {
+function insertTodo($todo, $due_date, $acc_email, $conn) {
     try {
-        $sql = "INSERT INTO todos (todo, due_date) VALUES ('$todo', '$due_date')";
+        $sql = "INSERT INTO todos (todo, due_date, acc_email) VALUES ('$todo', '$due_date', '$acc_email')";
         $conn->query($sql);
 
         $conn->close();
@@ -41,7 +45,7 @@ function insertTodo($todo, $due_date, $conn) {
         
     } catch (mysqli_sql_exception $e) {
         $conn->close();
-        jsonResponse(500, 'server error', 'Insert todo failed: ' . $e->getMessage());
+        jsonResponse(500, 'server error', 'Server Insert todo failed', $e->getMessage());
     }
 }
 ?>

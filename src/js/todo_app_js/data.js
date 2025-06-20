@@ -11,7 +11,7 @@ function createTodoJson(todo, due_date) {
 }
 
 function htmlMaker(user_todo) {
-    const { id: todo_id, todo: task, due_date } = user_todo;
+    const { todo_id, todo: task, due_date } = user_todo;
 
     const text_container_h2 = document.createElement('h2');
     const text_container_p = document.createElement('p');

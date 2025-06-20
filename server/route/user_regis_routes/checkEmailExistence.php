@@ -17,7 +17,7 @@ if ($_SERVER["REQUEST_METHOD"] == 'POST') {
         $safe_email = $conn->real_escape_string($email);
 
         // Check email from DB
-        checkDuplicateEmail($safe_email, $conn);
+        checkEmailExistence($safe_email, $conn);
 
     } else {
         jsonResponse(400, 'bad request', 'Failed : Invalid JSON body');
@@ -27,7 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] == 'POST') {
     jsonResponse(405, 'method not allowed', 'Failed : Only POST method is allowed');
 }
 
-function checkDuplicateEmail($email, $conn) {
+function checkEmailExistence($email, $conn) {
 
     try {
         $get_email_sql = "SELECT * FROM useraccounts WHERE acc_email = '$email'";
@@ -35,15 +35,15 @@ function checkDuplicateEmail($email, $conn) {
         $result = $conn->query($get_email_sql);
 
         if ($result->num_rows > 0) {
-            jsonResponse(200, 'ok', 'Email is duplicate');
+            jsonResponse(200, 'ok', 'Email is exist');
         } else {
-            jsonResponse(200, 'not found', 'Email not found');
+            jsonResponse(200, 'not found', 'Email is not found');
         }
         $conn->close();
 
     } catch (mysqli_sql_exception $e) {
         $conn->close();
-        jsonResponse(500, 'server error', 'Get email failed: ' . $e->getMessage());
+        jsonResponse(500, 'server error', 'Server Get Email Failed', $e->getMessage());
     }
 
 }

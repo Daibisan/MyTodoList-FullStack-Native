@@ -45,7 +45,7 @@ function updateTodo($todo_id, $todo, $due_date, $conn) {
         
     } catch (mysqli_sql_exception $e) {
         $conn->close();
-        jsonResponse(500, 'server error', 'Update todo failed: ' . $e->getMessage());
+        jsonResponse(500, 'server error', 'Server Update todo failed', $e->getMessage());
     }
 }
 ?>

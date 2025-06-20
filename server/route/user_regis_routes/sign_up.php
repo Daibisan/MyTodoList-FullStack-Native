@@ -40,11 +40,11 @@ function addAccount($username, $email, $password, $conn) {
 
         $conn->close();
 
-        jsonResponse(201, 'created', 'Account created successfully!');
+        jsonResponse(201, 'created', 'Signup Success!');
         
     } catch (mysqli_sql_exception $e) {
         $conn->close();
-        jsonResponse(500, 'server error', 'Insert failed: ' . $e->getMessage());
+        jsonResponse(500, 'server error', 'Server Insert Failed', $e->getMessage());
     }
 
 }
