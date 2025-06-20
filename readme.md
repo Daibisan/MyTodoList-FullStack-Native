@@ -5,7 +5,7 @@ A modern, responsive Todo List web application built with **HTML**, **CSS**, **J
 ---
 
 ## 📸 Screenshots
-![Signup Page](./src/img/signup_light.png.png)
+![Signup Page](./src/img/signup_light.png)
 ![Login Page](./src/img/login.png)
 ![Light Mode](./src/img/default_light_ss.png)
 ![Dark Mode](./src/img/default_dark_ss.png)
